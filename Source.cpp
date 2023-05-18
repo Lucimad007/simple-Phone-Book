@@ -23,6 +23,68 @@ void showMenu() {
 	std::cout << "\n\n\n";
 }
 
+
+void addContact() {
+	std::list<std::pair<std::string, std::string>> tempList;
+	std::pair<std::string, std::string> tempPair;
+	std::string name;
+	int count;
+
+	std::cout << "Enter Name : ";
+	std::cin >> name;
+	
+	std::cout << "How many number does he/she have? ";
+	std::cin >> count;
+	while (count){
+		std::cout << "Enter Label : ";
+		std::cin >> tempPair.first;
+		std::cout << "Enter Numer : ";
+		std::cin >> tempPair.second;
+		std::list<std::pair<std::string, std::string>>::iterator tempIterator = tempList.end();
+		tempList.insert(tempIterator, tempPair);
+		count--;
+	}
+
+	std::pair<std::string, std::list<std::pair<std::string, std::string>>> myPair = { name , tempList };
+	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.end();
+	book.insert(tempIterator, myPair);
+}
+
+void editContact() {
+	std::list<std::pair<std::string, std::string>> tempList;
+	std::pair<std::string, std::string> tempPair;
+	std::cout << "Enter name of contact that should be edited : ";
+	std::string name;
+	std::cin >> name;
+	int count = 0;
+
+	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator myIterator = book.find(name);
+
+	if (myIterator == book.end())
+		return;
+
+	std::cout << "How many number does he/she have? ";
+	std::cin >> count;
+	while (count) {
+		std::cout << "Enter Label : ";
+		std::cin >> tempPair.first;
+		std::cout << "Enter Numer : ";
+		std::cin >> tempPair.second;
+		std::list<std::pair<std::string, std::string>>::iterator tempIterator = tempList.end();
+		tempList.insert(tempIterator, tempPair);
+		count--;
+	}
+
+	myIterator->second = tempList;
+}
+
+void removeContact() {
+	std::cout << "Enter name of contact that should be deleted : ";
+	std::string name;
+	std::cin >> name;
+	book.erase(name);
+}
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
