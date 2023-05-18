@@ -23,7 +23,6 @@ void showMenu() {
 	std::cout << "\n\n\n";
 }
 
-
 void addContact() {
 	std::list<std::pair<std::string, std::string>> tempList;
 	std::pair<std::string, std::string> tempPair;
@@ -153,11 +152,45 @@ void removeFavorite() {
 	}
 }
 
-
 int main() {
 	//simple temorary phone book project
 	std::string input;
 	showMenu();
 
+	while (true){
+		std::cin >> input;
+		clear;
+
+		if (input == "1") {
+			addContact();
+		}else if (input == "2") {
+			editContact();
+		}else if (input == "3") {
+			removeContact();
+		}else if (input == "4") {
+			addPair();
+		}else if (input == "5") {
+			editPair();
+		}else if (input == "6") {
+			removePair();
+		}else if (input == "7") {
+			addFavorite();
+		}else if (input == "8") {
+			removeFavorite();
+		}else if (input == "9") {
+			//swapFavorites();		//will be added
+		}else if (input == "10") {
+			//showContacts();		//will be added
+		}else if (input == "11") {
+			//showFavorites();		//will be added
+		}else if (input == "12") {
+			//searchContact();		//will be added
+		}
+
+		clear;
+		showMenu();
+	}
+	
+	
 	return 0;
 }
