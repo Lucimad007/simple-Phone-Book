@@ -132,6 +132,28 @@ void removePair() {
 	tempIterator->second = tempList;	//this list is empty
 }
 
+void addFavorite() {
+	std::cout << "Enter name of contact that should be edited : ";
+	std::string name;
+	std::cin >> name;
+	favorites.insert(favorites.end(), name);		//we can also find his/her info in our map
+	std::cout << "added!" << std::endl;
+}
+
+void removeFavorite() {
+	std::cout << "Enter name of contact that should be edited : ";
+	std::string name;
+	std::cin >> name;
+	std::list<std::string>::iterator tempIterator = favorites.begin();
+
+	while (tempIterator != favorites.end()) {
+		if(name == *tempIterator)
+			favorites.erase(tempIterator);
+		std::advance(tempIterator, 1);
+	}
+}
+
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
