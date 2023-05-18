@@ -152,6 +152,37 @@ void removeFavorite() {
 	}
 }
 
+void swapFavorites() {
+	std::string name1, name2;
+	std::list<std::string>::iterator tempIterator = favorites.begin();
+	std::list<std::string>::iterator tempIterator2 = favorites.begin();
+
+	std::cout << "Enter first Name : ";
+	std::cin >> name1;
+	std::cout << "Enter second Name : ";
+	std::cin >> name2;
+
+	while (tempIterator != favorites.end()) {
+		if (name1 == *tempIterator)
+			return;
+		std::advance(tempIterator, 1);
+	}
+
+	while (tempIterator2 != favorites.end()) {
+		if (name2 == *tempIterator2)
+			return;
+		std::advance(tempIterator2, 1);
+	}
+
+	if (tempIterator == favorites.end() || tempIterator2 == favorites.end()) {
+		std::cout << "Wrong inputs!" << std::endl;
+		return;
+	}
+
+	*tempIterator = name2;
+	*tempIterator2 = name1;
+}
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
@@ -178,7 +209,7 @@ int main() {
 		}else if (input == "8") {
 			removeFavorite();
 		}else if (input == "9") {
-			//swapFavorites();		//will be added
+			swapFavorites();	
 		}else if (input == "10") {
 			//showContacts();		//will be added
 		}else if (input == "11") {
