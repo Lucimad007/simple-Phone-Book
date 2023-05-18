@@ -183,6 +183,21 @@ void swapFavorites() {
 	*tempIterator2 = name1;
 }
 
+void showContacts() {
+	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
+
+	while (tempIterator != book.end()) {
+		std::cout << "name : " << tempIterator->first << " numbers : " << std::endl;
+		std::list<std::pair<std::string, std::string>> tempList = tempIterator->second;
+		std::list<std::pair<std::string, std::string>>::iterator listIterator = tempList.begin();
+		while (listIterator != tempList.end()) {
+			std::cout << "Type : " << listIterator->first << " number : " << listIterator->second << std::endl;
+			std::advance(listIterator, 1);
+		}
+		std::advance(tempIterator, 1);
+	}
+}
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
@@ -211,7 +226,7 @@ int main() {
 		}else if (input == "9") {
 			swapFavorites();	
 		}else if (input == "10") {
-			//showContacts();		//will be added
+			showContacts();		
 		}else if (input == "11") {
 			//showFavorites();		//will be added
 		}else if (input == "12") {
