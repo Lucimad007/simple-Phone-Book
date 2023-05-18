@@ -4,7 +4,7 @@
 #include <map>
 #define clear system("cls")
 
-std::map<std::string ,std::list<std::pair<std::string, std::string>>> book;
+std::map<std::string, std::list<std::pair<std::string, std::string>>> book;
 std::list<std::string> favorites;
 
 void showMenu() {
@@ -31,10 +31,10 @@ void addContact() {
 
 	std::cout << "Enter Name : ";
 	std::cin >> name;
-	
+
 	std::cout << "How many number does he/she have? ";
 	std::cin >> count;
-	while (count){
+	while (count) {
 		std::cout << "Enter Label : ";
 		std::cin >> tempPair.first;
 		std::cout << "Enter Numer : ";
@@ -146,7 +146,7 @@ void removeFavorite() {
 	std::list<std::string>::iterator tempIterator = favorites.begin();
 
 	while (tempIterator != favorites.end()) {
-		if(name == *tempIterator)
+		if (name == *tempIterator)
 			favorites.erase(tempIterator);
 		std::advance(tempIterator, 1);
 	}
@@ -198,45 +198,83 @@ void showContacts() {
 	}
 }
 
+void showFavorites() {
+	std::string name;
+	std::list<std::string>::iterator favoriteIterator = favorites.begin();
+	while (favoriteIterator != favorites.end()) {
+		std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
+		while (tempIterator != book.end()) {
+			if (name == tempIterator->first)
+				break;
+			std::advance(tempIterator, 1);
+		}
+
+		if (tempIterator == book.end()){
+			std::advance(favoriteIterator, 1);
+			continue;
+		}
+
+		std::cout << "numbers : " << std::endl;
+		std::list<std::pair<std::string, std::string>>::iterator listIterator = (tempIterator->second).begin();
+		while (listIterator != (tempIterator->second).end()) {
+			std::cout << "Type : " << listIterator->first << " number : " << listIterator->second << std::endl;
+			std::advance(listIterator, 1);
+		}
+
+		std::advance(favoriteIterator, 1);
+	}
+}
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
 	showMenu();
 
-	while (true){
+	while (true) {
 		std::cin >> input;
 		clear;
 
 		if (input == "1") {
 			addContact();
-		}else if (input == "2") {
+		}
+		else if (input == "2") {
 			editContact();
-		}else if (input == "3") {
+		}
+		else if (input == "3") {
 			removeContact();
-		}else if (input == "4") {
+		}
+		else if (input == "4") {
 			addPair();
-		}else if (input == "5") {
+		}
+		else if (input == "5") {
 			editPair();
-		}else if (input == "6") {
+		}
+		else if (input == "6") {
 			removePair();
-		}else if (input == "7") {
+		}
+		else if (input == "7") {
 			addFavorite();
-		}else if (input == "8") {
+		}
+		else if (input == "8") {
 			removeFavorite();
-		}else if (input == "9") {
-			swapFavorites();	
-		}else if (input == "10") {
-			showContacts();		
-		}else if (input == "11") {
-			//showFavorites();		//will be added
-		}else if (input == "12") {
+		}
+		else if (input == "9") {
+			swapFavorites();
+		}
+		else if (input == "10") {
+			showContacts();
+		}
+		else if (input == "11") {
+			showFavorites();	
+		}
+		else if (input == "12") {
 			//searchContact();		//will be added
 		}
 
 		clear;
 		showMenu();
 	}
-	
-	
+
+
 	return 0;
 }
