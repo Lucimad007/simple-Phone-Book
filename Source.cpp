@@ -225,6 +225,27 @@ void showFavorites() {
 	}
 }
 
+void searchContact() {
+	std::string input;
+	std::cout << "Enter the string : ";
+	std::cin >> input;
+
+	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
+	while (tempIterator != book.end()) {
+		if ((tempIterator->first).find(input) == 0 && (tempIterator->first)[0] == input[0]) {		//because i think default of that function is also 0
+			std::cout << "numbers : " << std::endl;
+			std::list<std::pair<std::string, std::string>>::iterator listIterator = (tempIterator->second).begin();
+			while (listIterator != (tempIterator->second).end()) {
+				std::cout << "Type : " << listIterator->first << " number : " << listIterator->second << std::endl;
+				std::advance(listIterator, 1);
+			}
+
+		}
+		std::advance(tempIterator, 1);
+	}
+
+}
+
 int main() {
 	//simple temorary phone book project
 	std::string input;
@@ -268,13 +289,12 @@ int main() {
 			showFavorites();	
 		}
 		else if (input == "12") {
-			//searchContact();		//will be added
+			searchContact();	
 		}
 
 		clear;
 		showMenu();
 	}
-
 
 	return 0;
 }
