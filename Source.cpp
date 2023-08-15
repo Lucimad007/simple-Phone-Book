@@ -12,14 +12,14 @@ void showMenu() {
 	std::cout << "2.Edit a contact" << std::endl;
 	std::cout << "3.Remove a contact" << std::endl;
 	std::cout << "4.Add a pair to a contact" << std::endl;
-	std::cout << "5.Edit a pair to a contact" << std::endl;
-	std::cout << "6.Remove a pair to a contact" << std::endl;
+	std::cout << "5.Edit a pair of a contact" << std::endl;
+	std::cout << "6.Remove a pair of a contact" << std::endl;
 	std::cout << "7.Add a contact to favorites" << std::endl;
 	std::cout << "8.Remove a contact from favorites" << std::endl;
 	std::cout << "9.Change order in favorites" << std::endl;
-	std::cout << "10.Show all contacts in alphabetical order";
+	std::cout << "10.Show all contacts in alphabetical order" << std::endl;
 	std::cout << "11.Show favorite contacts based on order that saved" << std::endl;
-	std::cout << "12.Search a contact by beggining letters of his/her name" << std::endl;
+	std::cout << "12.Search a contact by beginning letters of his/her name" << std::endl;
 	std::cout << "\n\n\n";
 }
 
@@ -32,7 +32,7 @@ void addContact() {
 	std::cout << "Enter Name : ";
 	std::cin >> name;
 
-	std::cout << "How many number does he/she have? ";
+	std::cout << "How many numbers does he/she have? ";
 	std::cin >> count;
 	while (count) {
 		std::cout << "Enter Label : ";
@@ -118,17 +118,32 @@ void editPair() {
 }
 
 void removePair() {
-	std::list<std::pair<std::string, std::string>> tempList;
 	std::cout << "Enter name of contact that should be edited : ";
 	std::string name;
 	std::cin >> name;
+
+	std::string label, number;
+	std::cout << "Enter label : ";
+	std::cin >> label;
+	std::cout << "Enter number : ";
+	std::cin  >> number;
 
 	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.find(name);
 
 	if (tempIterator == book.end())
 		return;
 
-	tempIterator->second = tempList;	//this list is empty
+	std::list<std::pair<std::string, std::string>>& tempList = tempIterator->second;
+	for(auto it = tempList.begin(); it != tempList.end(); ++it)
+    {
+        if(it->first == label && it->second == number)
+        {
+            it = tempList.erase(it);
+            return;
+        }
+        std::advance(it, 1);
+    }
+
 }
 
 void addFavorite() {
@@ -147,7 +162,7 @@ void removeFavorite() {
 
 	while (tempIterator != favorites.end()) {
 		if (name == *tempIterator)
-			favorites.erase(tempIterator);
+			tempIterator = favorites.erase(tempIterator);   // if we don't do that we will get unexpected errors
 		std::advance(tempIterator, 1);
 	}
 }
@@ -164,13 +179,13 @@ void swapFavorites() {
 
 	while (tempIterator != favorites.end()) {
 		if (name1 == *tempIterator)
-			return;
+			break;
 		std::advance(tempIterator, 1);
 	}
 
 	while (tempIterator2 != favorites.end()) {
 		if (name2 == *tempIterator2)
-			return;
+			break;
 		std::advance(tempIterator2, 1);
 	}
 
@@ -187,7 +202,7 @@ void showContacts() {
 	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
 
 	while (tempIterator != book.end()) {
-		std::cout << "name : " << tempIterator->first << " numbers : " << std::endl;
+		std::cout << "name : " << std::endl << tempIterator->first << " numbers : " << std::endl;
 		std::list<std::pair<std::string, std::string>> tempList = tempIterator->second;
 		std::list<std::pair<std::string, std::string>>::iterator listIterator = tempList.begin();
 		while (listIterator != tempList.end()) {
@@ -203,6 +218,7 @@ void showFavorites() {
 	std::list<std::string>::iterator favoriteIterator = favorites.begin();
 	while (favoriteIterator != favorites.end()) {
 		std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
+		name = *favoriteIterator;
 		while (tempIterator != book.end()) {
 			if (name == tempIterator->first)
 				break;
@@ -214,6 +230,7 @@ void showFavorites() {
 			continue;
 		}
 
+		std:: cout << name << std::endl;
 		std::cout << "numbers : " << std::endl;
 		std::list<std::pair<std::string, std::string>>::iterator listIterator = (tempIterator->second).begin();
 		while (listIterator != (tempIterator->second).end()) {
@@ -233,6 +250,7 @@ void searchContact() {
 	std::map<std::string, std::list<std::pair<std::string, std::string>>>::iterator tempIterator = book.begin();
 	while (tempIterator != book.end()) {
 		if ((tempIterator->first).find(input) == 0 && (tempIterator->first)[0] == input[0]) {		//because i think default of that function is also 0
+			std::cout << tempIterator->first << std::endl;
 			std::cout << "numbers : " << std::endl;
 			std::list<std::pair<std::string, std::string>>::iterator listIterator = (tempIterator->second).begin();
 			while (listIterator != (tempIterator->second).end()) {
@@ -284,12 +302,18 @@ int main() {
 		}
 		else if (input == "10") {
 			showContacts();
+            getchar();  //  '\n'
+			getchar();  //  pause
 		}
 		else if (input == "11") {
-			showFavorites();	
+			showFavorites();
+            getchar();  //  '\n'
+			getchar();  //  pause
 		}
 		else if (input == "12") {
-			searchContact();	
+			searchContact();
+            getchar();  //  '\n'
+			getchar();  //  pause
 		}
 
 		clear;
